@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
 // ✅ Ensure this matches your Backend Port (8081)
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string) || 'https://mavisai-core.onrender.com';
+const API_BASE_URL = 'https://mavisai-core.onrender.com';
 
 export enum IntentType {
   GREETING = 'GREETING',
