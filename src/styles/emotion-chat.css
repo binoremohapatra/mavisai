@@ -1,0 +1,353 @@
+/* Emotion Chat Interface Styles */
+
+.emotion-chat-interface {
+  @apply w-full max-w-2xl mx-auto;
+}
+
+/* Chat History Styles */
+.chat-history {
+  @apply space-y-4;
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb #f9fafb;
+}
+
+.chat-history::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.chat-history::-webkit-scrollbar-track {
+  @apply bg-gray-50;
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+  @apply bg-gray-200 rounded-full;
+}
+
+.chat-history::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-300;
+}
+
+/* Message Animations */
+.message-enter {
+  @apply opacity-0 translate-y-4;
+}
+
+.message-enter-active {
+  @apply opacity-100 translate-y-0 transition-all duration-300 ease-out;
+}
+
+.message-exit {
+  @apply opacity-0 -translate-y-4 transition-all duration-200 ease-in;
+}
+
+/* Input Controls */
+.input-controls {
+  @apply relative;
+}
+
+.input-controls input:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Voice Listening State */
+.voice-listening {
+  @apply relative;
+}
+
+.voice-listening::before {
+  content: '';
+  @apply absolute inset-0 bg-red-100 rounded-full animate-ping;
+}
+
+.voice-listening::after {
+  content: '';
+  @apply absolute inset-0 bg-red-500 rounded-full;
+}
+
+/* Highlight Effects */
+.highlight-pulse {
+  @apply relative;
+  animation: highlightPulse 2s ease-in-out infinite;
+}
+
+@keyframes highlightPulse {
+  0%, 100% {
+    @apply ring-4 ring-blue-400 ring-opacity-50;
+  }
+  50% {
+    @apply ring-8 ring-blue-300 ring-opacity-30;
+  }
+}
+
+.highlight-glow {
+  @apply relative;
+  animation: highlightGlow 3s ease-in-out infinite;
+}
+
+@keyframes highlightGlow {
+  0%, 100% {
+    @apply shadow-lg shadow-blue-500/30;
+  }
+  50% {
+    @apply shadow-2xl shadow-blue-500/50;
+  }
+}
+
+/* Screen Transition Effects */
+.screen-transitioning {
+  @apply pointer-events-none;
+}
+
+.transition-slide-left {
+  animation: slideLeft 0.5s ease-out;
+}
+
+.transition-slide-right {
+  animation: slideRight 0.5s ease-out;
+}
+
+.transition-fade {
+  animation: fade 0.3s ease-out;
+}
+
+@keyframes slideLeft {
+  from {
+    @apply opacity-0 translate-x-8;
+  }
+  to {
+    @apply opacity-100 translate-x-0;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    @apply opacity-0 -translate-x-8;
+  }
+  to {
+    @apply opacity-100 translate-x-0;
+  }
+}
+
+@keyframes fade {
+  from {
+    @apply opacity-0;
+  }
+  to {
+    @apply opacity-100;
+  }
+}
+
+/* Loading States */
+.loading-dots {
+  @apply flex items-center gap-1;
+}
+
+.loading-dots span {
+  @apply w-2 h-2 bg-blue-600 rounded-full;
+  animation: loadingDots 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loadingDots {
+  0%, 80%, 100% {
+    @apply scale-0 opacity-0.5;
+  }
+  40% {
+    @apply scale-1 opacity-1;
+  }
+}
+
+/* Error States */
+.error-shake {
+  animation: errorShake 0.5s ease-in-out;
+}
+
+@keyframes errorShake {
+  0%, 100% {
+    @apply translate-x-0;
+  }
+  10%, 30%, 50%, 70%, 90% {
+    @apply -translate-x-2;
+  }
+  20%, 40%, 60%, 80% {
+    @apply translate-x-2;
+  }
+}
+
+/* Success States */
+.success-bounce {
+  animation: successBounce 0.6s ease-out;
+}
+
+@keyframes successBounce {
+  0%, 20%, 53%, 80%, 100% {
+    @apply translate-y-0;
+  }
+  40%, 43% {
+    @apply -translate-y-8;
+  }
+  70% {
+    @apply -translate-y-4;
+  }
+  90% {
+    @apply -translate-y-2;
+  }
+}
+
+/* Voice Wave Animation */
+.voice-wave {
+  @apply flex items-center gap-1;
+}
+
+.voice-wave span {
+  @apply w-1 bg-blue-600 rounded-full;
+  animation: voiceWave 1s ease-in-out infinite;
+}
+
+.voice-wave span:nth-child(1) {
+  animation-delay: 0s;
+  height: 0.5rem;
+}
+
+.voice-wave span:nth-child(2) {
+  animation-delay: 0.2s;
+  height: 0.75rem;
+}
+
+.voice-wave span:nth-child(3) {
+  animation-delay: 0.4s;
+  height: 1rem;
+}
+
+.voice-wave span:nth-child(4) {
+  animation-delay: 0.6s;
+  height: 0.75rem;
+}
+
+.voice-wave span:nth-child(5) {
+  animation-delay: 0.8s;
+  height: 0.5rem;
+}
+
+@keyframes voiceWave {
+  0%, 100% {
+    @apply scale-y-50;
+  }
+  50% {
+    @apply scale-y-100;
+  }
+}
+
+/* Mascot Animation States */
+.mascot-idle {
+  animation: mascotIdle 4s ease-in-out infinite;
+}
+
+@keyframes mascotIdle {
+  0%, 100% {
+    @apply translate-y-0;
+  }
+  50% {
+    @apply -translate-y-2;
+  }
+}
+
+.mascot-thinking {
+  animation: mascotThinking 2s ease-in-out infinite;
+}
+
+@keyframes mascotThinking {
+  0%, 100% {
+    @apply rotate-0;
+  }
+  25% {
+    @apply rotate-3;
+  }
+  75% {
+    @apply -rotate-3;
+  }
+}
+
+.mascot-celebrating {
+  animation: mascotCelebrating 1s ease-in-out;
+}
+
+@keyframes mascotCelebrating {
+  0%, 100% {
+    @apply scale-100 rotate-0;
+  }
+  25% {
+    @apply scale-110 rotate-5;
+  }
+  75% {
+    @apply scale-110 -rotate-5;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .emotion-chat-interface {
+    @apply px-2;
+  }
+  
+  .chat-history {
+    @apply max-h-64;
+  }
+  
+  .input-controls input {
+    @apply text-sm;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .chat-history::-webkit-scrollbar-track {
+    @apply bg-gray-800;
+  }
+  
+  .chat-history::-webkit-scrollbar-thumb {
+    @apply bg-gray-600;
+  }
+  
+  .chat-history::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-500;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .highlight-pulse,
+  .highlight-glow,
+  .voice-wave span,
+  .mascot-idle,
+  .mascot-thinking {
+    animation: none;
+  }
+  
+  .screen-transitioning {
+    transition: none;
+  }
+}
+
+/* Focus Management */
+.input-controls input:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2 outline-none;
+}
+
+.input-controls button:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2 outline-none;
+}
+
+/* Print Styles */
+@media print {
+  .emotion-chat-interface {
+    @apply hidden;
+  }
+}

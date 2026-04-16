@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #0a0a0a;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Hide scrollbar utility class */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+canvas {
+  display: block;
+}
+
+/* Matrix Background */
+.matrix-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0a2e 50%, #16213e 100%);
+}
+
+.matrix-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(138, 43, 226, 0.03) 2px,
+      rgba(138, 43, 226, 0.03) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(138, 43, 226, 0.03) 2px,
+      rgba(138, 43, 226, 0.03) 4px
+    );
+  animation: matrix-move 20s linear infinite;
+}
+
+@keyframes matrix-move {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(4px, 4px);
+  }
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.matrix-rain::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(138, 43, 226, 0.1) 50%,
+    transparent 100%
+  );
+  animation: matrix-rain 8s linear infinite;
+}
+
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Matrix Particles */
+.matrix-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.matrix-particles::before,
+.matrix-particles::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(138, 43, 226, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+}
+
+.matrix-particles::before {
+  top: 20%;
+  left: 10%;
+  animation: particle-float 10s ease-in-out infinite;
+}
+
+.matrix-particles::after {
+  top: 60%;
+  right: 15%;
+  animation: particle-float 12s ease-in-out infinite reverse;
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translate(30px, -30px) scale(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.8);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate(40px, 10px) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+/* Dark Purple Overlay */
+.dark-purple-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(75, 0, 130, 0.4) 0%,
+    rgba(138, 43, 226, 0.2) 40%,
+    rgba(10, 10, 10, 0.8) 100%
+  );
+  pointer-events: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+  .mascot-container {
+    display: none;
+  }
+}
