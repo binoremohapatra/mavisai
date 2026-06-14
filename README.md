@@ -1,120 +1,78 @@
-# 🤖 Mavis AI (Student Life OS)
+# 🤖 Mavis AI — Frontend (Student Life OS)
 
-<p align="center">
-  <img src="public/mavis-banner.png" alt="Mavis AI Banner" width="100%" />
-</p>
+> A TypeScript + React + Three.js frontend featuring a live VRM 3D avatar, real-time emotion-driven animations, speech recognition, and a full student life assistant dashboard.
 
-> **The next-generation AI companion interface.** A high-fidelity, interactive 3D avatar system built with React, Three.js, and VRoid technology, featuring an advanced industry-standard emotion engine and real-time lip-sync.
-
-[![React](https://img.shields.io/badge/React-18.3-blue?style=for-the-badge&logo=react)](https://react.dev/)
-[![Three.js](https://img.shields.io/badge/Three.js-0.164-black?style=for-the-badge&logo=three.js)](https://threejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.2-purple?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript)](https://www.typescriptlang.org)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
+[![Three.js](https://img.shields.io/badge/Three.js-VRM-black?logo=threedotjs)](https://threejs.org)
+[![Deployed](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)](https://mavisai.vercel.app)
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
-### 🎭 Advanced Emotion System
-*   **The "Perfect Talking" Formula**: Uses a curated blend of *Relaxed* (base) + *Happy (35%)* + *Natural Blink* + *Lip-Sync* to achieve ChatGPT-avatar quality interactions.
-*   **Dynamic Morphing**: 5.0 lerp factor for smooth, non-jarring transitions between expressions.
-*   **Context-Aware Mapping**: Seamlessly translates backend states (HAPPY, SAD, ANGRY, etc.) into expressive VRM blend shapes.
+- **VRM 3D Avatar** — Loads a VRM character model, driven by live emotion states from the AI backend
+- **Emotion System** — Avatar switches between 10+ named animations (`idle`, `talking`, `thinking`, `victory`, `defeat`, `wave`, etc.) based on LLM response emotion tags
+- **Lip Sync Engine** — Real-time lip sync driven by TTS audio analysis
+- **Eye Blink System** — Procedural eye blinking for lifelike avatar
+- **Speech Recognition** — Browser Web Speech API for voice input
+- **Chat Interface** — Full conversation history panel with emotion-aware chat bubbles
+- **Student Life Dashboard** — Modules for Attendance, Wellness, Career, Coding Assistance, Study Plans, Academic Planning
+- **Radial Navigation** — Character-centered radial menu for module switching
+- **Device Pairing** — Pair mobile device for extended features
 
-### 🎮 Interactive 3D Avatar
-*   **Vroid Integration**: Full support for VRM 1.0 models with high-performance rendering.
-*   **Action State Machine**: Priority-based animation system (e.g., `CELEBRATE` > `THINKING` > `IDLE`).
-*   **Real-time Lip Sync**: Predictive mouth movement synchronized with speech states.
+## 🛠️ Tech Stack
 
-### 🍱 Premium UI/UX
-*   **Cyberpunk Aesthetics**: Modern, dark-themed interface with glassmorphism and holographic accents.
-*   **Debug HUD**: Real-time monitoring of animation states, FPS, and backend responses.
-*   **Control Panel**: Manual overrides for testing animations and emotions on the fly.
+| Technology | Purpose |
+|---|---|
+| React 18 + TypeScript | UI framework |
+| Three.js + @react-three/fiber | 3D rendering |
+| @pixiv/three-vrm | VRM avatar loading & morph targets |
+| Zustand | Global state management |
+| Framer Motion | UI animations |
+| Axios | API communication |
+| Tailwind CSS + Radix UI | Styling & components |
+| Vite | Build tool |
 
----
+## 🚀 Run Locally
 
-## 🛠️ Technology Stack
-
-*   **Core**: React 18, Vite, TypeScript
-*   **3D Engine**: Three.js, @react-three/fiber, @react-three/drei
-*   **Avatar handling**: @pixiv/three-vrm, @pixiv/three-vrm-animation
-*   **State Management**: Zustand
-*   **Styling**: Tailwind CSS, Framer Motion, Radix UI
-*   **Networking**: Axios
-
----
-
-## 🚀 Getting Started
-
-### 1. Prerequisites
-- Node.js 18.x or higher
-- A compatible VRM model (default included at `public/character.vrm`)
-- (Optional) Mavis AI Backend running on port 8081
-
-### 2. Installation
 ```bash
-# Clone the repository
 git clone https://github.com/binoremohapatra/mavisai.git
-
-# Enter project directory
 cd mavisai
-
-# Install dependencies
 npm install
-```
 
-### 3. Development
-```bash
+# Point to backend
+echo "VITE_API_URL=http://localhost:8081" > .env
+
 npm run dev
 ```
-Navigate to `http://localhost:5173` to see Mavis in action.
 
----
+## 📁 Key Files
 
-## 📂 Project Structure
-
-```text
+```
 src/
-├── components/          # Reusable UI & 3D components
-│   ├── VRoidCharacter/  # Core avatar rendering logic
-│   ├── HUD/             # Holographic interface overlays
-│   └── Controls/        # Debug and manual control panels
-├── services/            # API, Voice, and Animation services
-├── hooks/               # Custom React hooks for state/logic
-├── store/               # Zustand state distributions
-├── utils/               # Animation controllers & Lip-Sync engines
-└── types/               # Strict TypeScript definitions
+├── components/
+│   ├── VRMScene.tsx          3D scene with VRM avatar
+│   ├── VRMCharacter.tsx      Avatar loader + morph target control
+│   ├── MavisDashboard.tsx    Main dashboard shell
+│   ├── EmotionChatInterface.tsx  Emotion-aware chat
+│   └── MascotAttendance/Career/Wellness/Coding Screens
+├── controllers/
+│   └── HumanAnimationController.ts  FBX animation mixer
+├── services/
+│   ├── VoiceService.ts       TTS + lip sync
+│   └── backend-service.ts    API client
+├── utils/
+│   ├── LipSyncEngine.ts      Audio → viseme mapping
+│   └── IntentHandlers.ts     Intent routing
+└── state/
+    └── avatarState.ts        Zustand avatar state
 ```
 
----
+## 🔗 Backend
 
-## 🎯 Emotion Mapping Reference
-
-| Backend Intent | VRM Expression | Intent Level |
-|----------------|----------------|--------------|
-| `HAPPY`        | Happy (1.0)    | High         |
-| `SPEAKING`     | Relaxed+Happy  | Natural      |
-| `CONCERNED`    | Surprised (0.5)| Medium       |
-| `WARNING`      | Angry (0.8)    | Critical     |
-| `IDLE`         | Neutral        | System       |
+[mavisai-core (Spring Boot + Python AI) →](https://github.com/binoremohapatra/mavisai-core)
 
 ---
 
-## 🤝 Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<p align="center">
-  Built with ❤️ by binoremohapatra
-</p>
+**Built by [Binore Mohapatra](https://github.com/binoremohapatra)**
