@@ -56,7 +56,7 @@ const ExpandableChatInput: React.FC<ExpandableChatInputProps> = ({
   };
 
   return (
-    <div className="flex items-end gap-4 w-full max-w-3xl mx-auto pointer-events-auto">
+    <div className="flex items-end gap-2 md:gap-4 w-full max-w-3xl mx-auto pointer-events-auto">
       
       {/* 🧭 Radial Menu Trigger */}
       <motion.button
@@ -64,13 +64,13 @@ const ExpandableChatInput: React.FC<ExpandableChatInputProps> = ({
         whileHover={{ scale: 1.1, boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)" }}
         whileTap={{ scale: 0.95 }}
         animate={{ rotate: isOpen ? 90 : 0 }}
-        className={`shrink-0 rounded-full flex items-center justify-center backdrop-blur-3xl border transition-all duration-500 w-14 h-14 ${
+        className={`shrink-0 rounded-full flex items-center justify-center backdrop-blur-3xl border transition-all duration-500 w-11 h-11 md:w-14 md:h-14 ${
           isOpen 
             ? 'bg-indigo-600 border-indigo-400 text-white shadow-[0_0_25px_rgba(79,70,229,0.5)]' 
             : 'bg-white/5 border-white/10 text-white hover:border-white/30'
         }`}
       >
-        <Grip size={28} />
+        <Grip className="w-5 h-5 md:w-7 md:h-7" />
       </motion.button>
 
       {/* 💬 Premium Chat Input with Shine & Glow */}
@@ -95,7 +95,7 @@ const ExpandableChatInput: React.FC<ExpandableChatInputProps> = ({
         {/* Listening Border Pulse */}
         {isListening && <div className="absolute inset-0 border-2 border-red-500/40 rounded-[28px] animate-pulse pointer-events-none" />}
 
-        <div className="flex items-end gap-2 w-full p-2 relative z-10">
+        <div className="flex items-center gap-1.5 md:gap-2 w-full p-1 md:p-2 relative z-10 min-h-[44px] md:min-h-[56px]">
           <textarea
             ref={textareaRef}
             value={val}
@@ -103,22 +103,22 @@ const ExpandableChatInput: React.FC<ExpandableChatInputProps> = ({
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && (e.preventDefault(), handleSend())}
-            placeholder={isListening ? "Listening..." : "Message Mavis..."}
+            placeholder={isListening ? "Listening..." : "Message..."}
             rows={1}
-            className="flex-1 bg-transparent text-white placeholder-slate-500 text-[16px] py-3 pl-6 pr-2 outline-none resize-none max-h-40 custom-scrollbar font-medium leading-relaxed tracking-wide selection:bg-indigo-500/40"
-            style={{ minHeight: '24px' }} 
+            className="flex-1 bg-transparent text-white placeholder-slate-500 text-xs md:text-base py-1 pl-3 pr-1 md:py-3 md:pl-6 md:pr-2 outline-none resize-none max-h-40 custom-scrollbar font-medium leading-tight md:leading-relaxed tracking-wide selection:bg-indigo-500/40 mt-1 md:mt-0"
+            style={{ minHeight: '20px' }} 
           />
 
-          <div className="flex items-center gap-1.5 pb-1 pr-1.5">
+          <div className="flex items-center gap-1.5 pr-1.5">
             <motion.button 
               onClick={handleMicClick}
               whileHover={{ scale: 1.1, backgroundColor: "rgba(255,255,255,0.05)" }}
               whileTap={{ scale: 0.9 }}
-              className={`p-2.5 rounded-full transition-colors ${
+              className={`p-1.5 md:p-2.5 rounded-full transition-colors ${
                 isListening ? 'bg-red-500/20 text-red-400' : 'text-slate-400 hover:text-white'
               }`}
             >
-              {isListening ? <StopCircle size={22} className="animate-pulse" /> : <Mic size={22} />}
+              {isListening ? <StopCircle className="w-5 h-5 md:w-5 md:h-5 animate-pulse" /> : <Mic className="w-5 h-5 md:w-5 md:h-5" />}
             </motion.button>
 
             <motion.button 
@@ -126,13 +126,13 @@ const ExpandableChatInput: React.FC<ExpandableChatInputProps> = ({
               disabled={!val.trim()}
               whileHover={val.trim() ? { scale: 1.05, backgroundColor: "#4f46e5" } : {}}
               whileTap={{ scale: 0.9 }}
-              className={`p-2.5 rounded-full transition-all duration-300 ${
+              className={`p-1.5 md:p-2.5 rounded-full transition-all duration-300 ${
                 val.trim() 
                   ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-900/40' 
                   : 'bg-white/5 text-slate-600'
               }`}
             >
-              <Send size={22} className={val.trim() ? "translate-x-0.5" : ""} />
+              <Send className={`w-5 h-5 md:w-5 md:h-5 ${val.trim() ? "translate-x-0.5" : ""}`} />
             </motion.button>
           </div>
         </div>

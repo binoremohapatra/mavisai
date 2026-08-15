@@ -97,43 +97,43 @@ export const MascotWellnessScreen: React.FC<{ onBack: () => void }> = ({ onBack 
         </motion.button>
       </div>
 
-      <div className="w-full h-full flex justify-between items-start pt-20 px-4 max-w-[1700px] mx-auto">
+      <div className="w-full h-full flex flex-col md:flex-row justify-between items-start pt-20 px-4 md:px-8 max-w-[1700px] mx-auto overflow-y-auto md:overflow-hidden pb-24 gap-6 md:gap-0 custom-scrollbar">
         
         {/* ⬅️ LEFT COLUMN: VITALS & TEXT BUBBLE */}
         <motion.div 
           initial={{ x: -50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 50 }}
-          className="w-[360px] mt-8 flex flex-col gap-6"
+          className="w-full md:w-[360px] shrink-0 mt-2 md:mt-8 flex flex-col gap-6"
         >
            {/* 1. Vitals Monitor */}
-           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[32px] p-6 shadow-2xl relative overflow-hidden">
-              <div className="flex items-center gap-3 mb-6">
-                 <div className="p-2.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20"><Activity size={20} /></div>
+           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[32px] p-5 md:p-6 shadow-2xl relative overflow-hidden">
+              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
+                 <div className="p-2 md:p-2.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20"><Activity size={16} className="md:w-5 md:h-5" /></div>
                  <div>
-                    <h2 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">Vitals Monitor</h2>
-                    <p className="text-white/90 text-sm font-bold tracking-tight">Emotional State</p>
+                    <h2 className="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Vitals Monitor</h2>
+                    <p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Emotional State</p>
                  </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-3 mb-4">
+              <div className="grid grid-cols-1 gap-2 md:gap-3 mb-2 md:mb-4">
                  {[
-                   { id: 'Happy', icon: <Smile size={22} className="text-emerald-400" />, label: "Optimal State" },
-                   { id: 'Neutral', icon: <Meh size={22} className="text-teal-400" />, label: "Stable State" },
-                   { id: 'Stressed', icon: <Frown size={22} className="text-rose-400" />, label: "Critical State" }
+                   { id: 'Happy', icon: <Smile size={20} className="md:w-[22px] md:h-[22px] text-emerald-400" />, label: "Optimal State" },
+                   { id: 'Neutral', icon: <Meh size={20} className="md:w-[22px] md:h-[22px] text-teal-400" />, label: "Stable State" },
+                   { id: 'Stressed', icon: <Frown size={20} className="md:w-[22px] md:h-[22px] text-rose-400" />, label: "Critical State" }
                  ].map((m) => (
                    <motion.button 
                      key={m.id} 
                      onClick={() => handleMoodLog(m.id)}
                      whileHover={{ scale: 1.02, x: 2 }} whileTap={{ scale: 0.98 }}
-                     className={`flex items-center gap-4 p-3 rounded-2xl border transition-all ${
+                     className={`flex items-center gap-3 md:gap-4 p-2.5 md:p-3 rounded-[18px] md:rounded-2xl border transition-all ${
                        mood === m.id ? 'bg-teal-500/10 border-teal-500 shadow-[0_0_20px_rgba(20,184,166,0.2)]' : 'bg-white/[0.02] border-white/5 hover:bg-white/[0.05]'
                      }`}
                    >
                      {m.icon}
                      <div className="text-left">
-                        <span className="block text-white font-bold text-xs uppercase tracking-wide">{m.id}</span>
-                        <span className="block text-[9px] text-white/40 uppercase tracking-widest">{m.label}</span>
+                        <span className="block text-white font-bold text-[10px] md:text-xs uppercase tracking-wide">{m.id}</span>
+                        <span className="block text-[8px] md:text-[9px] text-white/40 uppercase tracking-widest">{m.label}</span>
                      </div>
                    </motion.button>
                  ))}
@@ -175,26 +175,26 @@ export const MascotWellnessScreen: React.FC<{ onBack: () => void }> = ({ onBack 
         </motion.div>
 
         {/* 🟦 CENTER GAP (For Mavis) */}
-        <div className="flex-1" />
+        <div className="hidden md:block flex-1" />
 
         {/* ➡️ RIGHT COLUMN: PURE BREATHING ANIMATION */}
         <motion.div 
           initial={{ x: 50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 50, delay: 0.1 }}
-          className="w-[380px] mt-8"
+          className="w-full md:w-[380px] shrink-0 mt-2 md:mt-8"
         >
-           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[40px] p-8 h-[70vh] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden">
+           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[40px] p-5 md:p-8 h-[55vh] md:h-[70vh] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden">
               
-              <div className="flex justify-between items-end mb-8 border-b border-white/5 pb-6">
-                 <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20"><Wind size={20} /></div>
+              <div className="flex justify-between items-end mb-6 md:mb-8 border-b border-white/5 pb-4 md:pb-6">
+                 <div className="flex items-center gap-2 md:gap-3">
+                    <div className="p-2 md:p-2.5 rounded-xl bg-teal-500/10 text-teal-400 border border-teal-500/20"><Wind size={16} className="md:w-5 md:h-5" /></div>
                     <div>
-                       <h3 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">Breathing Sync</h3>
-                       <p className="text-white/90 text-sm font-bold tracking-tight">Visual Guide</p>
+                       <h3 className="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Breathing Sync</h3>
+                       <p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Visual Guide</p>
                     </div>
                  </div>
-                 {isBreathingMode && <Volume2 size={16} className="text-teal-400 animate-pulse" />}
+                 {isBreathingMode && <Volume2 size={14} className="md:w-4 md:h-4 text-teal-400 animate-pulse" />}
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center">

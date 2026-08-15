@@ -48,17 +48,17 @@ export function AuthScreen({ onLogin, onRegisterSuccess }: any) {
           opacity: [0.2, 0.4, 0.2]
         }}
         transition={{ duration: 5, repeat: Infinity, repeatType: "mirror" }}
-        className="absolute w-[800px] h-[800px] bg-purple-500/10 blur-[150px] rounded-full pointer-events-none"
+        className="absolute w-[800px] h-[800px] bg-purple-500/10 blur-[80px] md:blur-[150px] rounded-full pointer-events-none"
       />
 
       {/* 🔲 THE MASTER GLASS CARD */}
       <motion.div 
         layout
-        className="relative w-full max-w-[950px] h-[600px] bg-white/[0.03] border border-white/10 rounded-[40px] backdrop-blur-[50px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden flex"
+        className="relative w-full max-w-[950px] min-h-[600px] md:h-[600px] bg-white/[0.03] border border-white/10 rounded-[40px] backdrop-blur-[20px] md:backdrop-blur-[50px] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col md:flex-row"
       >
         
         {/* 📝 LEFT SIDE: LOGIN FORM */}
-        <div className="w-1/2 h-full p-14 flex flex-col justify-center relative z-10">
+        <div className={`w-full md:w-1/2 h-full p-8 md:p-14 flex-col justify-center relative z-10 ${isRegister ? 'hidden md:flex' : 'flex'}`}>
           <div className="mb-10">
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">Welcome Back</h1>
             <p className="text-white/40 text-sm">Sign in to sync your Mavis Neural Link.</p>
@@ -89,7 +89,7 @@ export function AuthScreen({ onLogin, onRegisterSuccess }: any) {
         </div>
 
         {/* 📝 RIGHT SIDE: REGISTER FORM */}
-        <div className="w-1/2 h-full p-14 flex flex-col justify-center relative z-10 ml-auto">
+        <div className={`w-full md:w-1/2 h-full p-8 md:p-14 flex-col justify-center relative z-10 md:ml-auto ${isRegister ? 'flex' : 'hidden md:flex'}`}>
           <div className="mb-8">
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">Create Account</h1>
             <p className="text-white/40 text-sm">Join the next-gen study ecosystem.</p>
@@ -118,7 +118,7 @@ export function AuthScreen({ onLogin, onRegisterSuccess }: any) {
           initial={false}
           animate={{ x: isRegister ? "0%" : "100%" }}
           transition={{ type: "spring", stiffness: 50, damping: 15 }} // Organic sliding
-          className="absolute top-0 left-0 w-1/2 h-full z-20 pointer-events-none overflow-hidden"
+          className="absolute top-0 left-0 w-1/2 h-full z-20 pointer-events-none overflow-hidden hidden md:block"
         >
           {/* Internal Animated Gradient */}
           <motion.div 

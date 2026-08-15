@@ -51,11 +51,11 @@ export const MavisDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout })
   };
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-[#030305] flex text-white font-sans cursor-none">
+    <div className="relative w-full h-screen overflow-hidden bg-[#030305] flex text-white font-sans md:cursor-none">
       
-      {/* 📍 CUSTOM CURSOR GLOW */}
+      {/* 📍 CUSTOM CURSOR GLOW - Hidden on Mobile */}
       <motion.div 
-        className="fixed top-0 left-0 w-6 h-6 bg-white rounded-full mix-blend-difference z-[9999] pointer-events-none blur-[2px]"
+        className="fixed top-0 left-0 w-6 h-6 bg-white rounded-full mix-blend-difference z-[9999] pointer-events-none blur-[2px] hidden md:block"
         animate={{ x: mousePos.x - 12, y: mousePos.y - 12 }}
         transition={{ type: "spring", damping: 30, stiffness: 400, mass: 0.2 }}
       />
@@ -64,7 +64,7 @@ export const MavisDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout })
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 bg-[#030305]" />
         <motion.div 
-          className="absolute w-[1000px] h-[1000px] bg-indigo-600/5 rounded-full blur-[150px]"
+          className="absolute w-[1000px] h-[1000px] bg-indigo-600/5 rounded-full blur-2xl md:blur-[150px] hidden md:block"
           animate={{ x: mousePos.x - 500, y: mousePos.y - 500 }}
           transition={{ type: "spring", damping: 50, stiffness: 20 }}
         />
@@ -85,18 +85,16 @@ export const MavisDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout })
       {/* 🟢 DASHBOARD UI */}
       <AnimatePresence mode="wait">
         {activeModule === 'dashboard' ? (
-          <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-20 flex w-full h-full">
-            <div className="w-[400px] h-full relative z-30 pointer-events-auto p-6 pl-0"><ChatHistoryPanel /></div>
-            <div className="flex-1 flex flex-col justify-end pb-12 px-8 z-30 pointer-events-none">
+          <motion.div key="dash" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 z-20 flex flex-col md:flex-row w-full h-full">
+            <div className="hidden lg:block w-[400px] h-full relative z-30 pointer-events-auto p-6 pl-0"><ChatHistoryPanel /></div>
+            <div className="flex-1 flex flex-col justify-end pb-6 px-4 md:pb-12 md:px-8 z-30 pointer-events-none">
                <ExpandableChatInput
                   onSendMessage={handleSendMessage}
-                  onMicToggle={isListening ? stopListening : startListening}
-                  isListening={isListening}
                   isOpen={isMenuOpen}
                   onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
                />
             </div>
-            <div className="w-[300px] h-full p-8 flex flex-col items-end gap-6 z-30 pointer-events-auto"><DashboardSummaryWidget /></div>
+            <div className="hidden xl:flex w-[300px] h-full p-8 flex-col items-end gap-6 z-30 pointer-events-auto"><DashboardSummaryWidget /></div>
           </motion.div>
         ) : (
           <motion.div key="module" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="absolute inset-0 z-40 bg-transparent pointer-events-auto">
@@ -117,57 +115,67 @@ export const MavisDashboard: React.FC<{ onLogout: () => void }> = ({ onLogout })
         )}
       </AnimatePresence>
 
-      {/* ⚙️ SYSTEM CONTROL HUB (Bottom Left) */}
-      <div className="absolute bottom-8 left-8 flex flex-col-reverse items-start gap-4 z-[100] pointer-events-auto">
-        <AnimatePresence>
-          {isSettingsOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: 20, scale: 0.9 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 10, scale: 0.9 }}
-              className="mb-2 p-3 bg-black/60 backdrop-blur-3xl border border-white/10 rounded-[28px] shadow-2xl flex flex-col gap-2 min-w-[210px] overflow-hidden"
-            >
-              {/* Tab Toggle: Dashboard / Pairing */}
-              <button 
-                onClick={() => {
-                  setActiveModule(activeModule === 'pairing' ? 'dashboard' : 'pairing');
-                  setIsSettingsOpen(false);
-                }}
-                className="flex items-center gap-3 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-purple-400 bg-white/5 hover:bg-purple-500/10 transition-all group"
+      {/* 📱 MOBILE TOP NAVBAR / DESKTOP SETTINGS */}
+      <div className="absolute top-4 right-4 left-4 md:top-auto md:right-auto md:bottom-8 md:left-8 flex justify-between md:justify-start items-start md:flex-col-reverse gap-4 z-[100] pointer-events-none">
+        
+        {/* Mobile Header Title (Only visible on small screens when on Dashboard) */}
+        {activeModule === 'dashboard' && (
+          <div className="md:hidden flex items-center h-12 pointer-events-auto">
+            <span className="text-white/80 font-black tracking-[0.2em] text-xs">MAVIS AI</span>
+          </div>
+        )}
+
+        <div className={`relative flex flex-col items-end md:items-start group pointer-events-auto ${activeModule !== 'dashboard' ? 'ml-auto md:ml-0' : ''}`}>
+          {/* Main Settings Button */}
+          <motion.button
+            whileHover={{ scale: 1.05, rotate: isSettingsOpen ? 90 : -90 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+            className={`p-3 md:p-5 rounded-2xl md:rounded-3xl border transition-all duration-500 shadow-2xl ${
+              isSettingsOpen 
+              ? 'bg-purple-600 text-white border-purple-400 shadow-purple-500/40' 
+              : 'bg-white/5 text-white/40 border-white/10 hover:border-white/20'
+            }`}
+          >
+            <Settings className="w-6 h-6 md:w-7 md:h-7" strokeWidth={2.5} />
+          </motion.button>
+
+          <AnimatePresence>
+            {isSettingsOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 10, scale: 0.9 }}
+                className="absolute top-full mt-4 right-0 md:top-auto md:right-auto md:bottom-full md:mb-4 md:left-0 p-3 bg-black/60 backdrop-blur-3xl border border-white/10 rounded-[28px] shadow-2xl flex flex-col gap-2 min-w-[210px] overflow-hidden origin-top-right md:origin-bottom-left"
               >
-                {activeModule !== 'pairing' ? (
-                  <><Link size={16} className="group-hover:rotate-45 transition-transform" /> Establish Neural Sync</>
-                ) : (
-                  <><LayoutDashboard size={16} /> Return to Dashboard</>
-                )}
-              </button>
+                {/* Tab Toggle: Dashboard / Pairing */}
+                <button 
+                  onClick={() => {
+                    setActiveModule(activeModule === 'pairing' ? 'dashboard' : 'pairing');
+                    setIsSettingsOpen(false);
+                  }}
+                  className="flex items-center gap-3 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-purple-400 bg-white/5 hover:bg-purple-500/10 transition-all group"
+                >
+                  {activeModule !== 'pairing' ? (
+                    <><Link size={16} className="group-hover:rotate-45 transition-transform" /> Establish Neural Sync</>
+                  ) : (
+                    <><LayoutDashboard size={16} /> Return to Dashboard</>
+                  )}
+                </button>
 
-              <div className="h-[1px] bg-white/5 mx-3 my-1" />
+                <div className="h-[1px] bg-white/5 mx-3 my-1" />
 
-              {/* Logout Button */}
-              <button 
-                onClick={onLogout}
-                className="flex items-center gap-3 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-rose-400 hover:bg-rose-500/10 transition-all"
-              >
-                <Power size={16} /> Disconnect Link
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Main Settings Button */}
-        <motion.button
-          whileHover={{ scale: 1.05, rotate: isSettingsOpen ? -90 : 90 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-          className={`p-5 rounded-3xl border transition-all duration-500 shadow-2xl ${
-            isSettingsOpen 
-            ? 'bg-purple-600 text-white border-purple-400 shadow-purple-500/40' 
-            : 'bg-white/5 text-white/40 border-white/10 hover:border-white/20'
-          }`}
-        >
-          <Settings size={28} strokeWidth={2.5} />
-        </motion.button>
+                {/* Logout Button */}
+                <button 
+                  onClick={onLogout}
+                  className="flex items-center gap-3 px-5 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-rose-400 hover:bg-rose-500/10 transition-all"
+                >
+                  <Power size={16} /> Disconnect Link
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
       <RadialMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} onNavigate={handleNavigate} />
@@ -193,16 +201,16 @@ const DashboardSummaryWidget = memo(() => {
       initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
       transition={{ delay, duration: 0.5 }}
       whileHover={{ scale: 1.02, x: -5 }}
-      className="group relative w-[260px] h-[85px] bg-white/[0.02] backdrop-blur-3xl border border-white/10 rounded-[22px] overflow-hidden shadow-2xl"
+      className="group relative w-[220px] md:w-[260px] h-[75px] md:h-[85px] bg-white/[0.02] backdrop-blur-md md:backdrop-blur-3xl border border-white/10 rounded-[20px] md:rounded-[22px] overflow-hidden shadow-2xl"
     >
       <div className={`absolute inset-y-4 left-0 w-[2px] rounded-full ${color} opacity-50 group-hover:opacity-100 transition-all`} />
-      <div className="flex items-center justify-between px-6 h-full relative z-10">
+      <div className="flex items-center justify-between px-5 md:px-6 h-full relative z-10">
         <div className="flex flex-col gap-0.5">
-          <p className="text-[10px] text-white/30 uppercase tracking-widest font-black">{label}</p>
-          <p className="text-xl font-bold text-white tracking-tight">{value}</p>
+          <p className="text-[9px] md:text-[10px] text-white/30 uppercase tracking-widest font-black">{label}</p>
+          <p className="text-lg md:text-xl font-bold text-white tracking-tight">{value}</p>
         </div>
-        <div className={`p-3 rounded-2xl bg-white/[0.03] ${color.replace('bg-', 'text-')}`}>
-          <Icon size={22} strokeWidth={1.5} />
+        <div className={`p-2.5 md:p-3 rounded-xl md:rounded-2xl bg-white/[0.03] ${color.replace('bg-', 'text-')}`}>
+          <Icon size={20} className="md:w-[22px] md:h-[22px]" strokeWidth={1.5} />
         </div>
       </div>
     </motion.div>

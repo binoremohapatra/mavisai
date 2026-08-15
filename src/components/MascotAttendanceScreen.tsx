@@ -124,61 +124,61 @@ export const MascotAttendanceScreen: React.FC<{ onBack: () => void }> = ({ onBac
     <div className="fixed inset-0 z-50 pointer-events-none flex flex-col p-8 overflow-hidden bg-transparent font-sans selection:bg-cyan-500/30">
       
       {/* 🧭 NAVIGATION */}
-      <div className="absolute top-8 left-8 pointer-events-auto">
+      <div className="absolute top-4 left-4 md:top-8 md:left-8 pointer-events-auto">
         <motion.button 
           whileHover={{ scale: 1.05, x: 5, backgroundColor: "rgba(255,255,255,0.08)" }} 
           whileTap={{ scale: 0.95 }} 
           onClick={onBack}
-          className="group flex items-center gap-3 bg-white/[0.03] backdrop-blur-3xl border border-white/10 px-6 py-3 rounded-full text-[11px] font-black uppercase tracking-[0.2em] text-white/70 hover:text-white hover:border-white/30 transition-all shadow-2xl"
+          className="group flex items-center gap-2 md:gap-3 bg-white/[0.03] backdrop-blur-3xl border border-white/10 px-4 py-2 md:px-6 md:py-3 rounded-full text-[9px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white/70 hover:text-white hover:border-white/30 transition-all shadow-2xl"
         >
-          <ArrowLeft size={16} /> Disconnect Log
+          <ArrowLeft size={14} className="md:w-4 md:h-4" /> <span className="hidden sm:inline">Disconnect Log</span><span className="inline sm:hidden">Back</span>
         </motion.button>
       </div>
 
-      <div className="w-full h-full flex justify-between items-start pt-20 px-4 max-w-[1700px] mx-auto">
+      <div className="w-full h-full flex flex-col md:flex-row justify-between items-start pt-16 md:pt-20 px-4 md:px-8 max-w-[1700px] mx-auto overflow-y-auto md:overflow-hidden pb-24 gap-4 md:gap-0 custom-scrollbar">
         
         {/* ⬅️ LEFT: GLOBAL STATS (The Ring) */}
         <motion.div 
           initial={{ x: -100, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 80, damping: 15 }}
-          className="w-[380px] pointer-events-auto mt-8"
+          className="w-full md:w-[380px] pointer-events-auto mt-2 md:mt-8 shrink-0"
         >
-          <div className="relative bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[40px] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col items-center overflow-hidden group">
+          <div className="relative bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[40px] p-5 md:p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col items-center overflow-hidden group">
             
             {/* Animated Background Scan Line */}
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent animate-scan opacity-50" />
 
             {/* Header */}
-            <div className="w-full flex justify-between items-center mb-8 z-10">
-               <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                    <Activity size={20} />
+            <div className="w-full flex justify-between items-center mb-6 md:mb-8 z-10">
+               <div className="flex items-center gap-2 md:gap-3">
+                  <div className="p-2 md:p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                    <Activity size={16} className="md:w-5 md:h-5" />
                   </div>
-                  <h2 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">Aggregate Log</h2>
+                  <h2 className="text-white/40 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Aggregate Log</h2>
                </div>
                <motion.button 
                  whileHover={{ scale: 1.1, rotate: 15 }}
                  onClick={() => isEditingGlobal ? handleGlobalUpdate() : setIsEditingGlobal(true)} 
                  className="text-white/40 hover:text-cyan-400 transition-colors"
                >
-                  {isEditingGlobal ? <Save size={18} className="animate-pulse" /> : <Edit3 size={18} />}
+                  {isEditingGlobal ? <Save size={16} className="animate-pulse md:w-[18px] md:h-[18px]" /> : <Edit3 size={16} className="md:w-[18px] md:h-[18px]" />}
                </motion.button>
             </div>
 
             {/* THE RING */}
-            <div className="relative w-64 h-64 flex items-center justify-center mb-8 z-10">
+            <div className="relative w-40 h-40 md:w-64 md:h-64 flex items-center justify-center mb-6 md:mb-8 z-10">
                <svg className="w-full h-full -rotate-90 drop-shadow-[0_0_20px_rgba(6,182,212,0.3)]">
-                  <circle cx="50%" cy="50%" r="50" stroke="rgba(255,255,255,0.05)" strokeWidth="6" fill="transparent" className="scale-[2.2] origin-center" />
+                  <circle cx="50%" cy="50%" r="45%" stroke="rgba(255,255,255,0.05)" strokeWidth="6" fill="transparent" className="md:scale-[2.2] origin-center" />
                   <motion.circle 
-                    cx="50%" cy="50%" r="50" 
+                    cx="50%" cy="50%" r="45%" 
                     stroke={isSafe ? '#06b6d4' : '#f43f5e'} 
                     strokeWidth="6" fill="transparent" strokeLinecap="round"
-                    strokeDasharray="314" 
-                    initial={{ strokeDashoffset: 314 }}
-                    animate={{ strokeDashoffset: 314 - strokeDash }}
-                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} // Custom cubic-bezier for "Apple" feel
-                    className="scale-[2.2] origin-center"
+                    strokeDasharray="283" 
+                    initial={{ strokeDashoffset: 283 }}
+                    animate={{ strokeDashoffset: 283 - (percentage / 100) * 283 }}
+                    transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }} 
+                    className="md:scale-[2.2] origin-center"
                   />
                </svg>
                <div className="absolute flex flex-col items-center">
@@ -186,7 +186,7 @@ export const MascotAttendanceScreen: React.FC<{ onBack: () => void }> = ({ onBac
                     initial={{ scale: 0.5, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="text-6xl font-black text-white tracking-tighter"
+                    className="text-4xl md:text-6xl font-black text-white tracking-tighter"
                   >
                     {percentage}%
                   </motion.span>
@@ -194,18 +194,18 @@ export const MascotAttendanceScreen: React.FC<{ onBack: () => void }> = ({ onBac
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.7 }}
-                    className={`mt-2 px-3 py-1 rounded-full text-[8px] font-black tracking-widest uppercase flex items-center gap-2 border ${isSafe ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' : 'bg-red-500/10 text-red-400 border-red-500/30'}`}
+                    className={`mt-1 md:mt-2 px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[7px] md:text-[8px] font-black tracking-widest uppercase flex items-center gap-1 md:gap-2 border ${isSafe ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' : 'bg-red-500/10 text-red-400 border-red-500/30'}`}
                   >
-                     {isSafe ? <CheckCircle2 size={10} /> : <AlertCircle size={10} />}
+                     {isSafe ? <CheckCircle2 size={8} className="md:w-2.5 md:h-2.5" /> : <AlertCircle size={8} className="md:w-2.5 md:h-2.5" />}
                      {isSafe ? 'OPTIMAL' : 'CRITICAL'}
                   </motion.div>
                </div>
             </div>
 
             {/* Inputs / Stats Display */}
-            <div className="w-full grid grid-cols-2 gap-3 z-10">
-               <div className="bg-black/40 border border-white/5 p-4 rounded-2xl hover:bg-white/5 transition-colors">
-                  <p className="text-[9px] text-white/30 uppercase tracking-widest font-black mb-1">Attended</p>
+            <div className="w-full grid grid-cols-2 gap-2 md:gap-3 z-10">
+               <div className="bg-black/40 border border-white/5 p-3 md:p-4 rounded-xl md:rounded-2xl hover:bg-white/5 transition-colors">
+                  <p className="text-[8px] md:text-[9px] text-white/30 uppercase tracking-widest font-black mb-1">Attended</p>
                   {isEditingGlobal ? (
                     <input type="number" value={globalInput.attended} onChange={e => setGlobalInput({...globalInput, attended: parseInt(e.target.value) || 0})} className="w-full bg-cyan-500/10 text-white font-bold text-xl outline-none border-b border-cyan-500" />
                   ) : (
@@ -225,27 +225,27 @@ export const MascotAttendanceScreen: React.FC<{ onBack: () => void }> = ({ onBac
         </motion.div>
 
         {/* 🟦 CENTER GAP */}
-        <div className="flex-1" />
+        <div className="hidden md:block flex-1" />
 
         {/* ➡️ RIGHT: DATABASE TRACKER */}
         <motion.div 
           initial={{ x: 100, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 80, damping: 15, delay: 0.1 }}
-          className="w-[450px] pointer-events-auto mt-8"
+          className="w-full md:w-[450px] pointer-events-auto mt-2 md:mt-8 shrink-0"
         >
-           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[40px] p-8 h-[80vh] flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] relative overflow-hidden">
+           <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[40px] p-5 md:p-8 h-[55vh] md:h-[80vh] flex flex-col shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] relative overflow-hidden">
               
               {/* Header */}
-              <div className="flex justify-between items-end mb-6 pb-4 border-b border-white/5">
-                 <div className="flex items-center gap-3">
-                    <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"><Zap size={20} /></div>
+              <div className="flex justify-between items-end mb-4 md:mb-6 pb-3 md:pb-4 border-b border-white/5">
+                 <div className="flex items-center gap-2 md:gap-3">
+                    <div className="p-2 md:p-2.5 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20"><Zap size={16} className="md:w-5 md:h-5" /></div>
                     <div>
-                       <h3 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">Database Grid</h3>
-                       <p className="text-white/90 text-sm font-bold tracking-tight">Subject Tracking</p>
+                       <h3 className="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Database Grid</h3>
+                       <p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Subject Tracking</p>
                     </div>
                  </div>
-                 <div className="flex items-center gap-2 text-[9px] font-mono text-cyan-500/60 uppercase">
+                 <div className="flex items-center gap-1 md:gap-2 text-[8px] md:text-[9px] font-mono text-cyan-500/60 uppercase">
                     <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" /> Live Sync
                  </div>
               </div>

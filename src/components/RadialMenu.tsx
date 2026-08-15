@@ -24,11 +24,34 @@ interface RadialMenuProps {
 }
 
 export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuProps) {
-  
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [radius, setRadius] = React.useState(250);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        // Ensure the icons don't overflow the screen width.
+        // Screen center is width / 2. Icon is ~48px wide (w-12), meaning 24px from center.
+        // So max radius = (width / 2) - 24px - 10px padding = width / 2 - 34
+        const maxRadius = (window.innerWidth / 2) - 34;
+        setRadius(Math.min(130, Math.max(80, maxRadius)));
+      } else {
+        setRadius(250); // Desktop
+      }
+    };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // 📐 ARC CONFIGURATION
-  const radius = 350; 
-  const startAngle = 235; // Top Left
-  const endAngle = 125;   // Bottom Left
+  // Custom angles to flank the character (Left and Right sides)
+  // Left: Top-Left (220), Mid-Left (180), Bottom-Left (140)
+  // Right: Top-Right (320), Mid-Right (0), Bottom-Right (40)
+  const itemAngles = [220, 180, 140, 320, 0, 40];
 
   const navItems: NavItem[] = [
     { id: "dashboard", icon: Home, label: "Overview", color: "from-cyan-500 to-blue-600" },
@@ -39,6 +62,8 @@ export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuPr
     { id: "wellness", icon: HeartPulse, label: "Wellness", color: "from-teal-500 to-cyan-600" },
   ];
 
+  const buttonOffset = isMobile ? -24 : -32;
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -46,10 +71,8 @@ export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuPr
           {navItems.map((item, index) => {
             const Icon = item.icon;
             
-            // Math for Position
-            const totalItems = navItems.length;
-            const step = (endAngle - startAngle) / (totalItems - 1);
-            const currentAngle = startAngle + (index * step);
+            // Math for Position using specific flanking angles
+            const currentAngle = itemAngles[index % itemAngles.length];
             const angleRad = (currentAngle * Math.PI) / 180;
             
             const x = Math.cos(angleRad) * radius;
@@ -68,7 +91,7 @@ export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuPr
                   delay: index * 0.05,
                 }}
                 className="absolute pointer-events-auto"
-                style={{ marginLeft: -32, marginTop: -32 }}
+                style={{ marginLeft: buttonOffset, marginTop: buttonOffset }}
               >
                 <motion.button
                   whileHover={{ scale: 1.2 }}
@@ -78,7 +101,7 @@ export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuPr
                       onClose(); // Auto-close menu on selection
                   }}
                   className={`
-                    relative group w-16 h-16 rounded-full 
+                    relative group w-12 h-12 md:w-16 md:h-16 rounded-full 
                     bg-gradient-to-br ${item.color}
                     shadow-[0_0_20px_rgba(0,0,0,0.6)] hover:shadow-[0_0_35px_rgba(255,255,255,0.4)]
                     flex flex-col items-center justify-center
@@ -91,10 +114,10 @@ export default function RadialMenu({ onNavigate, isOpen, onClose }: RadialMenuPr
                     transition={{ duration: 3, repeat: Infinity, delay: index * 0.2 }}
                     className="absolute inset-0 rounded-full border border-white/50"
                   />
-                  <Icon className="w-7 h-7 text-white drop-shadow-md relative z-10" />
+                  <Icon className="w-5 h-5 md:w-7 md:h-7 text-white drop-shadow-md relative z-10" />
                   
                   {/* Tooltip */}
-                  <div className="absolute left-full ml-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="absolute top-full mt-2 md:left-full md:mt-0 md:ml-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <div className="bg-black/90 text-white text-xs font-bold px-3 py-1.5 rounded border border-white/20 whitespace-nowrap tracking-wider shadow-xl">
                       {item.label}
                     </div>

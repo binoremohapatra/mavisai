@@ -97,77 +97,77 @@ export const MascotCareerScreen: React.FC<{ onBack: () => void }> = ({ onBack })
         </motion.button>
       </div>
 
-      <div className="w-full h-full flex justify-between items-start pt-20 px-4 max-w-[1700px] mx-auto">
+      <div className="w-full h-full flex flex-col md:flex-row justify-between items-start pt-20 px-4 md:px-8 max-w-[1700px] mx-auto overflow-y-auto md:overflow-hidden pb-24 gap-6 md:gap-0 custom-scrollbar">
         
         {/* ⬅️ LEFT: RESUME INPUT */}
         <motion.div 
           initial={{ x: -50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 50 }}
-          className="w-[35%] h-[80vh]"
+          className="w-full md:w-[35%] shrink-0 h-[60vh] md:h-[80vh]"
         >
-           <div className="h-full bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[40px] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden group">
+           <div className="h-full bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[40px] p-5 md:p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden group">
               
               {/* Subtle Scanning Animation Line */}
               {loading && (
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-orange-500 to-transparent animate-scan z-20 opacity-70" />
               )}
 
-              <div className="flex items-center gap-4 mb-6">
-                 <div className="p-3 rounded-2xl bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
-                    <FileText size={22} />
+              <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+                 <div className="p-2 md:p-3 rounded-xl md:rounded-2xl bg-orange-500/10 text-orange-400 border border-orange-500/20 shadow-[0_0_20px_rgba(249,115,22,0.2)]">
+                    <FileText size={16} className="md:w-[22px] md:h-[22px]" />
                  </div>
                  <div>
-                    <h3 className="text-white/40 text-[10px] font-black uppercase tracking-[0.3em]">Input Stream</h3>
-                    <p className="text-white/90 text-sm font-bold tracking-tight">Resume Ingest</p>
+                    <h3 className="text-white/40 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Input Stream</h3>
+                    <p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Resume Ingest</p>
                  </div>
               </div>
               
               <textarea 
                 value={resumeText} onChange={(e) => setResumeText(e.target.value)}
-                className="flex-1 bg-black/40 border border-white/5 rounded-3xl p-6 text-xs text-white/80 outline-none resize-none custom-scrollbar leading-relaxed placeholder:text-white/10 focus:border-orange-500/30 transition-colors z-10"
+                className="flex-1 bg-black/40 border border-white/5 rounded-[20px] md:rounded-3xl p-4 md:p-6 text-[10px] md:text-xs text-white/80 outline-none resize-none custom-scrollbar leading-relaxed placeholder:text-white/10 focus:border-orange-500/30 transition-colors z-10"
                 placeholder="// Paste Resume data for neural scan..."
               />
 
               <motion.button 
                 onClick={handleExecuteScan} disabled={loading || !resumeText}
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                className="w-full mt-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-black h-16 rounded-3xl text-[11px] uppercase tracking-[0.25em] shadow-[0_10px_40px_rgba(234,88,12,0.3)] transition-all flex items-center justify-center gap-3 disabled:opacity-50 disabled:grayscale relative overflow-hidden"
+                className="w-full mt-4 md:mt-6 bg-gradient-to-r from-orange-600 to-amber-600 text-white font-black h-12 md:h-16 rounded-[18px] md:rounded-3xl text-[9px] md:text-[11px] uppercase tracking-[0.2em] md:tracking-[0.25em] shadow-[0_10px_40px_rgba(234,88,12,0.3)] transition-all flex items-center justify-center gap-2 md:gap-3 disabled:opacity-50 disabled:grayscale relative overflow-hidden"
               >
-                {loading ? <Activity className="animate-spin" size={18} /> : (
-                  <>Initiate Scan <Upload size={16} /></>
+                {loading ? <Activity className="animate-spin md:w-[18px] md:h-[18px]" size={14} /> : (
+                  <>Initiate Scan <Upload size={14} className="md:w-[16px] md:h-[16px]" /></>
                 )}
               </motion.button>
            </div>
         </motion.div>
 
         {/* 🟦 CENTER GAP (For Mavis) */}
-        <div className="flex-1" />
+        <div className="hidden md:block flex-1" />
 
         {/* ➡️ RIGHT: DIAGNOSTICS */}
         <motion.div 
           initial={{ x: 50, opacity: 0 }} 
           animate={{ x: 0, opacity: 1 }} 
           transition={{ type: "spring", stiffness: 50, delay: 0.1 }}
-          className="w-[35%] h-[80vh]"
+          className="w-full md:w-[35%] shrink-0 h-[60vh] md:h-[80vh]"
         >
-           <div className="h-full bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[40px] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden">
+           <div className="h-full bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[40px] p-5 md:p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.6)] flex flex-col relative overflow-hidden">
               
               {/* Background Glow */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute top-0 right-0 w-40 md:w-64 h-40 md:h-64 bg-orange-500/5 blur-[60px] md:blur-[100px] rounded-full pointer-events-none" />
               
-              <div className="flex justify-between items-end mb-8 border-b border-white/10 pb-6 relative z-10">
+              <div className="flex justify-between items-end mb-4 md:mb-8 border-b border-white/10 pb-4 md:pb-6 relative z-10">
                  <div>
-                    <h3 className="text-[10px] text-orange-500 tracking-[0.4em] uppercase font-black mb-1">Diagnostics</h3>
-                    <p className="text-white/90 text-sm font-bold tracking-tight">Career Match Matrix</p>
+                    <h3 className="text-[8px] md:text-[10px] text-orange-500 tracking-[0.3em] md:tracking-[0.4em] uppercase font-black mb-1">Diagnostics</h3>
+                    <p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Career Match Matrix</p>
                  </div>
                  {careerData && (
                     <motion.div 
                       initial={{ scale: 0 }} animate={{ scale: 1 }}
                       className="flex items-baseline gap-1"
                     >
-                       <span className="text-5xl font-black text-white tracking-tighter">{careerData.matchScore}</span>
-                       <span className="text-sm font-bold text-orange-500">%</span>
+                       <span className="text-3xl md:text-5xl font-black text-white tracking-tighter">{careerData.matchScore}</span>
+                       <span className="text-xs md:text-sm font-bold text-orange-500">%</span>
                     </motion.div>
                  )}
               </div>

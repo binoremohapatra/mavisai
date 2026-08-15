@@ -76,23 +76,23 @@ export const MascotStudyScreen: React.FC<{ onBack: () => void }> = memo(({ onBac
         </motion.button>
       </div>
 
-      <div className="w-full h-full flex justify-between items-start pt-20 max-w-[1700px] mx-auto">
+      <div className="w-full h-full flex flex-col md:flex-row justify-between items-start pt-20 px-4 md:px-8 max-w-[1700px] mx-auto overflow-y-auto md:overflow-hidden pb-24 gap-6 md:gap-0 custom-scrollbar">
         {/* INPUT PANEL */}
-        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} className="w-[400px] flex flex-col gap-6">
-          <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[32px] p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] group relative overflow-hidden">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="p-3.5 rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"><BrainCircuit size={24} /></div>
-              <div><h3 className="text-white/30 text-[9px] font-black uppercase tracking-[0.3em]">Neural Input</h3><p className="text-white/90 text-sm font-bold tracking-tight">Define Objective</p></div>
+        <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} className="w-full md:w-[400px] shrink-0 flex flex-col gap-4 md:gap-6">
+          <div className="bg-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[30px] md:rounded-[32px] p-5 md:p-8 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] group relative overflow-hidden">
+            <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
+              <div className="p-2 md:p-3.5 rounded-xl md:rounded-2xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"><BrainCircuit size={18} className="md:w-6 md:h-6" /></div>
+              <div><h3 className="text-white/30 text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em]">Neural Input</h3><p className="text-white/90 text-xs md:text-sm font-bold tracking-tight">Define Objective</p></div>
             </div>
-            <textarea value={goal} onChange={e => setGoal(e.target.value)} className="w-full bg-black/40 border border-white/5 text-white p-6 text-sm h-64 outline-none focus:border-indigo-500/40 focus:bg-black/60 transition-all resize-none rounded-[24px] font-medium leading-relaxed placeholder:text-white/10 relative z-10 custom-scrollbar" placeholder="Example: I want to master Data Structures in 2 weeks..." />
-            <motion.button onClick={() => createStudyPlan(goal)} disabled={loading || !goal} whileHover={!loading ? { scale: 1.02, backgroundColor: "#4f46e5" } : {}} whileTap={{ scale: 0.98 }} className="w-full mt-6 bg-indigo-600/90 text-white font-bold py-5 rounded-[22px] text-[12px] uppercase tracking-[0.25em] shadow-[0_15px_35px_rgba(79,70,229,0.3)] disabled:opacity-20 transition-all flex items-center justify-center gap-3 relative z-10">{loading ? <Activity className="animate-spin" size={20} /> : (<>Generate Strategy <Sparkles size={18} /></>)}</motion.button>
+            <textarea value={goal} onChange={e => setGoal(e.target.value)} className="w-full bg-black/40 border border-white/5 text-white p-4 md:p-6 text-xs md:text-sm h-32 md:h-64 outline-none focus:border-indigo-500/40 focus:bg-black/60 transition-all resize-none rounded-[20px] md:rounded-[24px] font-medium leading-relaxed placeholder:text-white/10 relative z-10 custom-scrollbar" placeholder="Example: I want to master Data Structures in 2 weeks..." />
+            <motion.button onClick={() => createStudyPlan(goal)} disabled={loading || !goal} whileHover={!loading ? { scale: 1.02, backgroundColor: "#4f46e5" } : {}} whileTap={{ scale: 0.98 }} className="w-full mt-4 md:mt-6 bg-indigo-600/90 text-white font-bold py-3 md:py-5 rounded-[18px] md:rounded-[22px] text-[10px] md:text-[12px] uppercase tracking-[0.2em] md:tracking-[0.25em] shadow-[0_15px_35px_rgba(79,70,229,0.3)] disabled:opacity-20 transition-all flex items-center justify-center gap-2 md:gap-3 relative z-10">{loading ? <Activity className="animate-spin" size={16} className="md:w-5 md:h-5" /> : (<>Generate Strategy <Sparkles size={14} className="md:w-[18px] md:h-[18px]" /></>)}</motion.button>
           </div>
         </motion.div>
 
-        <div className="flex-1" />
+        <div className="hidden md:block flex-1" />
 
         {/* OUTPUT PANEL */}
-        <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="w-[550px] h-[85vh]">
+        <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} className="w-full md:w-[550px] shrink-0 h-[60vh] md:h-[85vh]">
           <AnimatePresence mode="wait">
             {cleanPlan ? <StudyPlanRenderer plan={cleanPlan} /> : (
               <div className="h-full flex flex-col items-center justify-center bg-white/[0.01] backdrop-blur-3xl border border-white/5 rounded-[40px] opacity-20">
